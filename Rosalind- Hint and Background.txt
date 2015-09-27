@@ -1,0 +1,682 @@
+#########Rabbits and Recurrence Relations########################
+#########http://rosalind.info/problems/fib/######################
+
+Wascally Wabbitsclick
+
+In 1202, Leonardo of Pisa (commonly known as Fibonacci) considered a mathematical exercise regarding the reproduction of a population of rabbits. He made the following simplifying assumptions about the population:
+
+The population begins in the first month with a pair of newborn rabbits.
+Rabbits reach reproductive age after one month.
+In any given month, every rabbit of reproductive age mates with another rabbit of reproductive age.
+Exactly one month after two rabbits mate, they produce one male and one female rabbit.
+Rabbits never die or stop reproducing.
+Fibonacci's exercise was to calculate how many pairs of rabbits would remain in one year. We can see that in the second month, the first pair of rabbits reach reproductive age and mate. In the third month, another pair of rabbits is born, and we have two rabbit pairs; our first pair of rabbits mates again. In the fourth month, another pair of rabbits is born to the original pair, while the second pair reach maturity and mate (with three total pairs). The dynamics of the rabbit population are illustrated in Figure 1. After a year, the rabbit population boasts 144 pairs.
+
+Although Fibonacci's assumption of the rabbits' immortality may seem a bit farfetched, his model was not unrealistic for reproduction in a predator-free environment: European rabbits were introduced to Australia in the mid 19th Century, a place with no real indigenous predators for them. Within 50 years, the rabbits had already eradicated many plant species across the continent, leading to irreversible changes in the Australian ecosystem and turning much of its grasslands into eroded, practically uninhabitable parts of the modern Outback (see Figure 2). In this problem, we will use the simple idea of counting rabbits to introduce a new computational topic, which involves building up large solutions from smaller ones.
+
+
+Problem
+
+A sequence is an ordered collection of objects (usually numbers), which are allowed to repeat. Sequences can be finite or infinite. Two examples are the finite sequence (π,−2‾‾√,0,π) and the infinite sequence of odd numbers (1,3,5,7,9,…). We use the notation an to represent the n-th term of a sequence.
+
+A recurrence relation is a way of defining the terms of a sequence with respect to the values of previous terms. In the case of Fibonacci's rabbits from the introduction, any given month will contain the rabbits that were alive the previous month, plus any new offspring. A key observation is that the number of offspring in any month is equal to the number of rabbits that were alive two months prior. As a result, if Fn represents the number of rabbit pairs alive after the n-th month, then we obtain the Fibonacci sequence having terms Fn that are defined by the recurrence relation Fn=Fn−1+Fn−2 (with F1=F2=1 to initiate the sequence). Although the sequence bears Fibonacci's name, it was known to Indian mathematicians over two millennia ago.
+
+When finding the n-th term of a sequence defined by a recurrence relation, we can simply use the recurrence relation to generate terms for progressively larger values of n. This problem introduces us to the computational technique of dynamic programming, which successively builds up solutions by using the answers to smaller cases.
+
+Given: Positive integers n≤40 and k≤5.
+
+Return: The total number of rabbit pairs that will be present after n months if we begin with 1 pair and in each generation, every pair of reproduction-age rabbits produces a litter of k rabbit pairs (instead of only 1 pair).
+
+
+
+######Consensus and Profile#########################################
+######http://rosalind.info/problems/cons/##########################
+
+Finding a Most Likely Common Ancestor
+
+In “Counting Point Mutations”, we calculated the minimum number of symbol mismatches between two strings of equal length to model the problem of finding the minimum number of point mutations occurring on the evolutionary path between two homologous strands of DNA. If we instead have several homologous strands that we wish to analyze simultaneously, then the natural problem is to find an average-case strand to represent the most likely common ancestor of the given strands.
+
+Problem
+
+A matrix is a rectangular table of values divided into rows and columns. An m×n matrix has m rows and n columns. Given a matrix A, we write Ai,j to indicate the value found at the intersection of row i and column j.
+
+Say that we have a collection of DNA strings, all having the same length n. Their profile matrix is a 4×n matrix P in which P1,j represents the number of times that 'A' occurs in the jth position of one of the strings, P2,j represents the number of times that C occurs in the jth position, and so on (see below).
+
+A consensus string c is a string of length n formed from our collection by taking the most common symbol at each position; the jth symbol of c therefore corresponds to the symbol having the maximum value in the j-th column of the profile matrix. Of course, there may be more than one most common symbol, leading to multiple possible consensus strings.
+
+		A T C C A G C T
+		G G G C A A C T
+		A T G G A T C T
+DNA Strings	A A G C A A C C
+		T T G G A A C T
+		A T G C C A T T
+		A T G G C A C T
+
+
+		A   5 1 0 0 5 5 0 0
+Profile		C   0 0 1 4 2 0 6 1
+		G   1 1 6 3 0 1 0 0
+		T   1 5 0 0 0 1 1 6
+
+
+Consensus	A T G C A A C T
+
+
+Given: A collection of at most 10 DNA strings of equal length (at most 1 kbp) in FASTA format.
+
+Return: A consensus string and profile matrix for the collection. (If several possible consensus strings exist, then you may return any one of them.)
+
+
+#############Mortal Fibonacci Rabbits#############################
+#############http://rosalind.info/problems/fibd/###################
+
+Problem
+
+Figure 4. A figure illustrating the propagation of Fibonacci's rabbits if they die after three months.
+Recall the definition of the Fibonacci numbers from “Rabbits and Recurrence Relations”, which followed the recurrence relation Fn=Fn−1+Fn−2 and assumed that each pair of rabbits reaches maturity in one month and produces a single pair of offspring (one male, one female) each subsequent month.
+
+Our aim is to somehow modify this recurrence relation to achieve a dynamic programming solution in the case that all rabbits die out after a fixed number of months. See Figure 4 for a depiction of a rabbit tree in which rabbits live for three months (meaning that they reproduce only twice before dying).
+
+Given: Positive integers n≤100 and m≤20.
+
+Return: The total number of pairs of rabbits that will remain after the n-th month if all rabbits live for m months.
+
+
+###########Overlap Graphs#########################################
+###########http://rosalind.info/problems/grph/####################
+
+
+A Brief Introduction to Graph Theory
+
+Networks arise everywhere in the practical world, especially in biology. Networks are prevalent in popular applications such as modeling the spread of disease, but the extent of network applications spreads far beyond popular science. Our first question asks how to computationally model a network without actually needing to render a picture of the network.
+
+First, some terminology: graph is the technical term for a network; a graph is made up of hubs called nodes (or vertices), pairs of which are connected via segments/curves called edges. If an edge connects nodes v and w, then it is denoted by v,w (or equivalently w,v).
+
+an edge v,w is incident to nodes v and w; we say that v and w are adjacent to each other;
+the degree of v is the number of edges incident to it;
+a walk is an ordered collection of edges for which the ending node of one edge is the starting node of the next (e.g., {v1,v2}, {v2,v3}, {v3,v4}, etc.);
+a path is a walk in which every node appears in at most two edges;
+path length is the number of edges in the path;
+a cycle is a path whose final node is equal to its first node (so that every node is incident to exactly two edges in the cycle); and
+the distance between two vertices is the length of the shortest path connecting them.
+Graph theory is the abstract mathematical study of graphs and their properties.
+
+
+Problem
+
+A graph whose nodes have all been labeled can be represented by an adjacency list, in which each row of the list contains the two node labels corresponding to a unique edge.
+
+A directed graph (or digraph) is a graph containing directed edges, each of which has an orientation. That is, a directed edge is represented by an arrow instead of a line segment; the starting and ending nodes of an edge form its tail and head, respectively. The directed edge with tail v and head w is represented by (v,w) (but not by (w,v)). A directed loop is a directed edge of the form (v,v).
+
+For a collection of strings and a positive integer k, the overlap graph for the strings is a directed graph Ok in which each string is represented by a node, and string s is connected to string t with a directed edge when there is a length k suffix of s that matches a length k prefix of t, as long as s≠t; we demand s≠t to prevent directed loops in the overlap graph (although directed cycles may be present).
+
+Given: A collection of DNA strings in FASTA format having total length at most 10 kbp.
+
+Return: The adjacency list corresponding to O3. You may return edges in any order.
+
+
+#################Calculating Expected Offspring#########################
+#################http://rosalind.info/problems/iev/#####################
+
+
+Problem
+
+For a random variable X taking integer values between 1 and n, the expected value of X is E(X)=∑nk=1k×Pr(X=k). The expected value offers us a way of taking the long-term average of a random variable over a large number of trials.
+
+As a motivating example, let X be the number on a six-sided die. Over a large number of rolls, we should expect to obtain an average of 3.5 on the die (even though it's not possible to roll a 3.5). The formula for expected value confirms that E(X)=∑6k=1k×Pr(X=k)=3.5.
+
+More generally, a random variable for which every one of a number of equally spaced outcomes has the same probability is called a uniform random variable (in the die example, this "equal spacing" is equal to 1). We can generalize our die example to find that if X is a uniform random variable with minimum possible value a and maximum possible value b, then E(X)=a+b2. You may also wish to verify that for the dice example, if Y is the random variable associated with the outcome of a second die roll, then E(X+Y)=7.
+
+Given: Six positive integers, each of which does not exceed 20,000. The integers correspond to the number of couples in a population possessing each genotype pairing for a given factor. In order, the six given integers represent the number of couples having the following genotypes:
+
+AA-AA
+AA-Aa
+AA-aa
+Aa-Aa
+Aa-aa
+aa-aa
+
+
+Return: The expected number of offspring displaying the dominant phenotype in the next generation, under the assumption that every couple has exactly two offspring.
+
+
+###################Finding a Shared Motif##################################
+###################http://rosalind.info/problems/lcsm/#####################
+
+
+Searching Through the Haystack
+
+In “Finding a Motif in DNA”, we searched a given genetic string for a motif; however, this problem assumed that we know the motif in advance. In practice, biologists often do not know exactly what they are looking for. Rather, they must hunt through several different genomes at the same time to identify regions of similarity that may indicate genes shared by different organisms or species.
+
+The simplest such region of similarity is a motif occurring without mutation in every one of a collection of genetic strings taken from a database; such a motif corresponds to a substring shared by all the strings. We want to search for long shared substrings, as a longer motif will likely indicate a greater shared function.
+
+
+Problem
+
+A common substring of a collection of strings is a substring of every member of the collection. We say that a common substring is a longest common substring if there does not exist a longer common substring. For example, "CG" is a common substring of "ACGTACGT" and "AACCGGTATA", but it is not as long as possible; in this case, "GTA" is a longest common substring of "ACGTACGT" and "AACCGTATA".
+
+Note that the longest common substring is not necessarily unique; for a simple example, "AA" and "CC" are both longest common substrings of "AACC" and "CCAA".
+
+Given: A collection of k (k≤100) DNA strings of length at most 1 kbp each in FASTA format.
+
+Return: A longest common substring of the collection. (If multiple solutions exist, you may return any single solution.)
+
+
+
+###################Independent Alleles#####################################
+###################http://rosalind.info/problems/lia/######################
+
+Problem
+
+
+Figure 2. The probability of each outcome for the sum of the values on two rolled dice (black and white), broken down depending on the number of pips showing on each die. You can verify that 18 of the 36 equally probable possibilities result in an odd sum.
+Two events A and B are independent if Pr(A and B) is equal to Pr(A)×Pr(B). In other words, the events do not influence each other, so that we may simply calculate each of the individual probabilities separately and then multiply.
+
+More generally, random variables X and Y are independent if whenever A and B are respective events for X and Y, A and B are independent (i.e., Pr(A and B)=Pr(A)×Pr(B)).
+
+As an example of how helpful independence can be for calculating probabilities, let X and Y represent the numbers showing on two six-sided dice. Intuitively, the number of pips showing on one die should not affect the number showing on the other die. If we want to find the probability that X+Y is odd, then we don't need to draw a tree diagram and consider all possibilities. We simply first note that for X+Y to be odd, either X is even and Y is odd or X is odd and Y is even. In terms of probability, Pr(X+Y is odd)=Pr(X is even and Y is odd)+Pr(X is odd and Y is even). Using independence, this becomes [Pr(X is even)×Pr(Y is odd)]+[Pr(X is odd)×Pr(Y is even)], or (12)2+(12)2=12. You can verify this result in Figure 2, which shows all 36 outcomes for rolling two dice.
+
+Given: Two positive integers k (k≤7) and N (N≤2k). In this problem, we begin with Tom, who in the 0th generation has genotype Aa Bb. Tom has two children in the 1st generation, each of whom has two children, and so on. Each organism always mates with an organism having genotype Aa Bb.
+
+Return: The probability that at least N Aa Bb organisms will belong to the k-th generation of Tom's family tree (don't count the Aa Bb mates at each level). Assume that Mendel's second law holds for the factors.
+
+
+####################Inferring mRNA from Protein#############################
+####################http://rosalind.info/problems/mrna/####################
+
+
+Problem
+
+For positive integers a and n, a modulo n (written amodn in shorthand) is the remainder when a is divided by n. For example, 29mod11=7 because 29=11×2+7.
+
+Modular arithmetic is the study of addition, subtraction, multiplication, and division with respect to the modulo operation. We say that a and b are congruent modulo n if amodn=bmodn; in this case, we use the notation a≡bmodn.
+
+Two useful facts in modular arithmetic are that if a≡bmodn and c≡dmodn, then a+c≡b+dmodn and a×c≡b×dmodn. To check your understanding of these rules, you may wish to verify these relationships for a=29, b=73, c=10, d=32, and n=11.
+
+As you will see in this exercise, some Rosalind problems will ask for a (very large) integer solution modulo a smaller number to avoid the computational pitfalls that arise with storing such large numbers.
+
+Given: A protein string of length at most 1000 aa.
+
+Return: The total number of different RNA strings from which the protein could have been translated, modulo 1,000,000. (Don't neglect the importance of the stop codon in protein translation.)
+
+
+
+####################Enumerating Gene Orders################################
+####################http://rosalind.info/problems/perm/####################
+
+Problem
+
+A permutation of length n is an ordering of the positive integers {1,2,…,n}. For example, π=(5,3,2,1,4) is a permutation of length 5.
+
+Given: A positive integer n≤7.
+
+Return: The total number of permutations of length n, followed by a list of all such permutations (in any order).
+
+
+####################Locating Restriction Sites###########################
+####################http://rosalind.info/problems/revp/##################
+
+Problem
+
+A DNA string is a reverse palindrome if it is equal to its reverse complement. For instance, GCATGC is a reverse palindrome because its reverse complement is GCATGC. See Figure 2.
+
+Given: A DNA string of length at most 1 kbp in FASTA format.
+
+Return: The position and length of every reverse palindrome in the string having length between 4 and 12. You may return these pairs in any order.
+
+
+###################RNA Splicing##########################################
+###################http://rosalind.info/problems/splc/###################
+
+Problem
+
+After identifying the exons and introns of an RNA string, we only need to delete the introns and concatenate the exons to form a new string ready for translation.
+
+Given: A DNA string s (of length at most 1 kbp) and a collection of substrings of s acting as introns. All strings are given in FASTA format.
+
+Return: A protein string resulting from transcribing and translating the exons of s. (Note: Only one solution will exist for the dataset provided.)
+
+
+
+###################Enumerating k-mers Lexicographically#####################
+###################http://rosalind.info/problems/lexf/######################
+
+
+Problem
+
+Assume that an alphabet 𝒜 has a predetermined order; that is, we write the alphabet as a permutation 𝒜=(a1,a2,…,ak), where a1<a2<⋯<ak. For instance, the English alphabet is organized as (A,B,…,Z).
+
+Given two strings s and t having the same length n, we say that s precedes t in the lexicographic order (and write s<Lext) if the first symbol s[j] that doesn't match t[j] satisfies sj<tj in 𝒜.
+
+Given: A collection of at most 10 symbols defining an ordered alphabet, and a positive integer n (n≤10).
+
+Return: All strings of length n that can be formed from the alphabet, ordered lexicographically.
+
+
+
+#################Genome Assembly as Shortest Superstring################## 
+#################http://rosalind.info/problems/long/######################
+
+Problem
+
+For a collection of strings, a larger string containing every one of the smaller strings as a substring is called a superstring.
+
+By the assumption of parsimony, a shortest possible superstring over a collection of reads serves as a candidate chromosome.
+
+Given: At most 50 DNA strings whose length does not exceed 1 kbp in FASTA format (which represent reads deriving from the same strand of a single linear chromosome).
+
+The dataset is guaranteed to satisfy the following condition: there exists a unique way to reconstruct the entire chromosome from these reads by gluing together pairs of reads that overlap by more than half their length.
+
+Return: A shortest superstring containing all the given strings (thus corresponding to a reconstructed chromosome).
+
+
+
+################Perfect Matchings and RNA Secondary Structures############
+################http://rosalind.info/problems/pmch/#######################
+
+Problem
+
+A matching in a graph G is a collection of edges of G for which no node belongs to more than one edge in the collection. See Figure 2 for examples of matchings. If G contains an even number of nodes (say 2n), then a matching on G is perfect if it contains n edges, which is clearly the maximum possible. An example of a graph containing a perfect matching is shown in Figure 3.
+
+First, let Kn denote the complete graph on 2n labeled nodes, in which every node is connected to every other node with an edge, and let pn denote the total number of perfect matchings in Kn. For a given node x, there are 2n−1 ways to join x to the other nodes in the graph, after which point we must form a perfect matching on the remaining 2n−2 nodes. This reasoning provides us with the recurrence relation pn=(2n−1)⋅pn−1; using the fact that p1 is 1, this recurrence relation implies the closed equation pn=(2n−1)(2n−3)(2n−5)⋯(3)(1).
+
+Given an RNA string s=s1…sn, a bonding graph for s is formed as follows. First, assign each symbol of s to a node, and arrange these nodes in order around a circle, connecting them with edges called adjacency edges. Second, form all possible edges {A, U} and {C, G}, called basepair edges; we will represent basepair edges with dashed edges, as illustrated by the bonding graph in Figure 4.
+
+Note that a matching contained in the basepair edges will represent one possibility for base pairing interactions in s, as shown in Figure 5. For such a matching to exist, s must have the same number of occurrences of 'A' as 'U' and the same number of occurrences of 'C' as 'G'.
+
+Given: An RNA string s of length at most 80 bp having the same number of occurrences of 'A' as 'U' and the same number of occurrences of 'C' as 'G'.
+
+Return: The total possible number of perfect matchings of basepair edges in the bonding graph of s.
+
+
+
+#####################Enumerating Oriented Gene Orderings################################
+#####################http://rosalind.info/problems/sign/################################
+
+Problem
+
+A signed permutation of length n is some ordering of the positive integers {1,2,…,n} in which each integer is then provided with either a positive or negative sign (for the sake of simplicity, we omit the positive sign). For example, π=(5,−3,−2,1,4) is a signed permutation of length 5.
+
+Given: A positive integer n≤6.
+
+Return: The total number of signed permutations of length n, followed by a list of all such permutations (you may list the signed permutations in any order).
+
+
+
+#####################Transitions and Transversions#####################################
+#####################http://rosalind.info/problems/tran/##############################
+
+Problem
+
+For DNA strings s1 and s2 having the same length, their transition/transversion ratio R(s1,s2) is the ratio of the total number of transitions to the total number of transversions, where symbol substitutions are inferred from mismatched corresponding symbols as when calculating Hamming distance (see “Counting Point Mutations”).
+
+Given: Two DNA strings s1 and s2 of equal length (at most 1 kbp).
+
+Return: The transition/transversion ratio R(s1,s2).
+
+
+######################Completing a Tree#################################################
+######################http://rosalind.info/problems/tree/###############################
+
+Problem
+
+Figure 2. A labeled tree with 6 vertices and 5 edges.
+An undirected graph is connected if there is a path connecting any two nodes. A tree is a connected (undirected) graph containing no cycles; this definition forces the tree to have a branching structure organized around a central core of nodes, just like its living counterpart. See Figure 2.
+
+We have already grown familiar with trees in “Mendel's First Law”, where we introduced the probability tree diagram to visualize the outcomes of a random variable.
+
+In the creation of a phylogeny, taxa are encoded by the tree's leaves, or nodes having degree 1. A node of a tree having degree larger than 1 is called an internal node.
+
+Given: A positive integer n (n≤1000) and an adjacency list corresponding to a graph on n nodes that contains no cycles.
+
+Return: The minimum number of edges that can be added to the graph to produce a tree.
+
+
+###################Catalan Numbers and RNA Secondary Structures########################
+###################http://rosalind.info/problems/cat/###################################
+The Human Knotclick
+
+You may have had the misfortune to participate in a team-building event that featured the "human knot," in which everyone joins hands with two other people, and the group must undo the giant knot of arms without letting go (see Figure 1).
+
+Let's consider a simplified version of the human knot. Say that we have an even number of people at a party who are standing in a circle, and they pair off and shake hands at the same time. One combinatorial question at hand asks us to count the total number of ways that the guests can shake hands without any two pairs interfering with each other by crossing arms.
+
+This silly little counting problem is actually an excellent analogy for RNA folding. In practice, base pairing can occur anywhere along the RNA molecule, but the secondary structure of RNA often forbids base pairs crossing over each other, which forms a structure called a pseudoknot (see Figure 2)). Pseudoknots are not technically knots, but they nevertheless cause RNA to fold over itself.
+
+Forbidding pseudoknots offers an interesting wrinkle to the problem of counting potential RNA secondary structures that we started working with in “Perfect Matchings and RNA Secondary Structures”, in which every possible nucleotide of a strand of RNA must base pair with another nucleotide.
+
+Problem
+
+A matching in a graph is noncrossing if none of its edges cross each other. If we assume that the n nodes of this graph are arranged around a circle, and if we label these nodes with positive integers between 1 and n, then a matching is noncrossing as long as there are not edges {i,j} and {k,l} such that i<k<j<l.
+
+A noncrossing matching of basepair edges in the bonding graph corresponding to an RNA string will correspond to a possible secondary structure of the underlying RNA strand that lacks pseudoknots, as shown in Figure 3.
+
+In this problem, we will consider counting noncrossing perfect matchings of basepair edges. As a motivating example of how to count noncrossing perfect matchings, let cn denote the number of noncrossing perfect matchings in the complete graph K2n. After setting c0=1, we can see that c1 should equal 1 as well. As for the case of a general n, say that the nodes of K2n are labeled with the positive integers from 1 to 2n. We can join node 1 to any of the remaining 2n−1 nodes; yet once we have chosen this node (say m), we cannot add another edge to the matching that crosses the edge {1,m}. As a result, we must match all the edges on one side of {1,m} to each other. This requirement forces m to be even, so that we can write m=2k for some positive integer k.
+
+There are 2k−2 nodes on one side of {1,m} and 2n−2k nodes on the other side of {1,m}, so that in turn there will be ck−1⋅cn−k different ways of forming a perfect matching on the remaining nodes of K2n. If we let m vary over all possible n−1 choices of even numbers between 1 and 2n, then we obtain the recurrence relation cn=∑nk=1ck−1⋅cn−k. The resulting numbers cn counting noncrossing perfect matchings in K2n are called the Catalan numbers, and they appear in a huge number of other settings. See Figure 4 for an illustration counting the first four Catalan numbers.
+
+Given: An RNA string s having the same number of occurrences of 'A' as 'U' and the same number of occurrences of 'C' as 'G'. The length of the string is at most 300 bp.
+
+Return: The total number of noncrossing perfect matchings of basepair edges in the bonding graph of s, modulo 1,000,000.
+
+
+########################Error Correction in Reads ######################################
+########################http://rosalind.info/problems/corr/#############################
+
+Problem
+
+As is the case with point mutations, the most common type of sequencing error occurs when a single nucleotide from a read is interpreted incorrectly.
+
+Given: A collection of up to 1000 reads of equal length (at most 50 bp) in FASTA format. Some of these reads were generated with a single-nucleotide error. For each read s in the dataset, one of the following applies:
+
+s was correctly sequenced and appears in the dataset at least twice (possibly as a reverse complement);
+s is incorrect, it appears in the dataset exactly once, and its Hamming distance is 1 with respect to exactly one correct read in the dataset (or its reverse complement).
+Return: A list of all corrections in the form "[old read]->[new read]". (Each correction must be a single symbol substitution, and you may return the corrections in any order.)
+
+#######################Counting Phylogenetic Ancestors#################################
+#######################http://rosalind.info/problems/inod/#############################
+
+Culling the Forestclick to collapse
+
+In “Completing a Tree”, we introduced the tree for the purposes of constructing phylogenies. Yet the definition of tree as a connected graph with no cycles produces a huge class of different graphs, from simple paths and star-like graphs to more familiar arboreal structures (see Figure 1). Which of these graphs are appropriate for phylogenetic study?
+
+Modern evolutionary theory (beginning with Darwin) indicates that the only way a new species can be created is if it splits off from an existing species after a population is isolated for an extended period of time. This model of species evolution implies a very specific type of phylogeny, in which internal nodes represent branching points of evolution where an ancestor species either evolved into a new species or split into two new species: therefore, one edge of this internal node therefore connects the node to its most recent ancestor, whereas one or two new edges connect it to its immediate descendants. This framework offers a much clearer notion of how to characterize phylogenies.
+
+Problem
+
+A binary tree is a tree in which each node has degree equal to at most 3. The binary tree will be our main tool in the construction of phylogenies.
+
+A rooted tree is a tree in which one node (the root) is set aside to serve as the pinnacle of the tree. A standard graph theory exercise is to verify that for any two nodes of a tree, exactly one path connects the nodes. In a rooted tree, every node v will therefore have a single parent, or the unique node w such that the path from v to the root contains {v,w}. Any other node x adjacent to v is called a child of v because v must be the parent of x; note that a node may have multiple children. In other words, a rooted tree possesses an ordered hierarchy from the root down to its leaves, and as a result, we may often view a rooted tree with undirected edges as a directed graph in which each edge is oriented from parent to child. We should already be familiar with this idea; it's how the Rosalind problem tree works!
+
+Even though a binary tree can include nodes having degree 2, an unrooted binary tree is defined more specifically: all internal nodes have degree 3. In turn, a rooted binary tree is such that only the root has degree 2 (all other internal nodes have degree 3).
+
+Given: A positive integer n (3≤n≤10000).
+
+Return: The number of internal nodes of any unrooted binary tree having n leaves.
+
+#######################k-Mer Composition##############################################
+#######################http://rosalind.info/problems/kmer/############################
+
+Generalizing GC-Content
+
+A length k substring of a genetic string is commonly called a k-mer. A genetic string of length n can be seen as composed of n−k+1 overlapping k-mers. The k-mer composition of a genetic string encodes the number of times that each possible k-mer occurs in the string. See Figure 1. The 1-mer composition is a generalization of the GC-content of a strand of DNA, and the 2-mer, 3-mer, and 4-mer compositions of a DNA string are also commonly known as its di-nucleotide, tri-nucleotide, and tetra-nucleotide compositions.
+
+The biological significance of k-mer composition is manyfold. GC-content is helpful not only in helping to identify a piece of unknown DNA (see “Computing GC Content”), but also because a genomic region having high GC-content compared to the rest of the genome signals that it may belong to an exon. Analyzing k-mer composition is vital to fragment assembly as well.
+
+In “Computing GC Content”, we also drew an analogy between analyzing the frequency of characters and identifying the underlying language. For larger values of k, the k-mer composition offers a more robust fingerprint of a string's identity because it offers an analysis on the scale of substrings (i.e., words) instead of that of single symbols. As a basis of comparison, in language analysis, the k-mer composition of a text can be used not only to pin down the language, but also often the author.
+
+Problem
+
+For a fixed positive integer k, order all possible k-mers taken from an underlying alphabet lexicographically.
+
+Then the k-mer composition of a string s can be represented by an array A for which A[m] denotes the number of times that the mth k-mer (with respect to the lexicographic order) appears in s.
+
+Given: A DNA string s in FASTA format (having length at most 100 kbp).
+
+Return: The 4-mer composition of s.
+
+
+########################Speeding Up Motif Finding#######################################
+########################http://rosalind.info/problems/kmp/##############################
+
+Shortening the Motif Search
+
+In “Finding a Motif in DNA”, we discussed the problem of searching a genome for a known motif. Because of the large scale of eukaryotic genomes, we need to accomplish this computational task as efficiently as possible.
+
+The standard method for locating one string t as a substring of another string s (and perhaps one you implemented in “Finding a Motif in DNA”) is to move a sliding window across the larger string, at each step starting at s[k] and matching subsequent symbols of t to symbols of s. After we have located a match or mismatch, we then shift the window backwards to begin searching at s[k+1].
+
+The potential weakness of this method is as follows: say we have matched 100 symbols of t to s before reaching a mismatch. The window-sliding method would then move back 99 symbols of s and start comparing t to s; can we avoid some of this sliding?
+
+For example, say that we are looking for t=ACGTACGT in s=TAGGTACGTACGGCATCACG. From s[6] to s[12], we have matched seven symbols of t, and yet s[13] = G produces a mismatch with t[8] = T. We don't need to go all the way back to s[7] and start matching with t because s[7]=C, s[8]=G, and s[9]=T are all different from t[1]=A. What about s[10]? Because t[1:4]=t[5:8]=ACGT, the previous mismatch of s[13]=G and t[8]=T guarantees the same mismatch with s[13] and t[4]. Following this analysis, we may advance directly to s[14] and continue sliding our window, without ever having to move it backward.
+
+This method can be generalized to form the framework behind the Knuth-Morris-Pratt algorithm (KMP), which was published in 1977 and offers an efficiency boost for determining whether a given motif can be located within a larger string.
+
+Problem
+
+A prefix of a length n string s is a substring s[1:j]; a suffix of s is a substring s[k:n].
+
+The failure array of s is an array P of length n for which P[k] is the length of the longest substring s[j:k] that is equal to some prefix s[1:k−j+1], where j cannot equal 1 (otherwise, P[k] would always equal k). By convention, P[1]=0.
+
+Given: A DNA string s (of length at most 100 kbp) in FASTA format.
+
+Return: The failure array of s.
+
+######################Finding a Shared Spliced Motif####################################
+######################http://rosalind.info/problems/lcsq/###############################
+
+Locating Motifs Despite Intron
+
+In “Finding a Shared Motif”, we discussed searching through a database containing multiple genetic strings to find a longest common substring of these strings, which served as a motif shared by the two strings. However, as we saw in “RNA Splicing”, coding regions of DNA are often interspersed by introns that do not code for proteins.
+
+We therefore need to locate shared motifs that are separated across exons, which means that the motifs are not required to be contiguous. To model this situation, we need to enlist subsequences.
+
+Problem
+
+A string u is a common subsequence of strings s and t if the symbols of u appear in order as a subsequence of both s and t. For example, "ACTG" is a common subsequence of "AACCTTGG" and "ACACTGTGA".
+
+Analogously to the definition of longest common substring, u is a longest common subsequence of s and t if there does not exist a longer common subsequence of the two strings. Continuing our above example, "ACCTTG" is a longest common subsequence of "AACCTTGG" and "ACACTGTGA", as is "AACTGG".
+
+Given: Two DNA strings s and t (each having length at most 1 kbp) in FASTA format.
+
+Return: A longest common subsequence of s and t. (If more than one solution exists, you may return any one.)
+
+########################Ordering Strings of Varying Length Lexicographically############
+########################http://rosalind.info/problems/lexv/#############################
+
+Organizing Strings of Different Lengths
+
+In “Enumerating k-mers Lexicographically”, we introduced the lexicographic order for strings of the same length constructed from some ordered underlying alphabet. However, our experience with dictionaries suggests that we should be able to order strings of different lengths just as easily. That is, we already have an intuitive sense that "APPLE" comes before "APPLET", which comes before "ARTS," and so we should be able to apply this intuition toward cataloguing genetic strings of varying lengths.
+
+Problem
+
+Say that we have strings s=s1s2⋯sm and t=t1t2⋯tn with m<n. Consider the substring t′=t[1:m]. We have two cases:
+
+If s=t′, then we set s<Lext because s is shorter than t (e.g., APPLE<APPLET).
+Otherwise, s≠t′. We define s<Lext if s<Lext′ and define s>Lext if s>Lext′ (e.g., APPLET<LexARTS because APPL<LexARTS).
+Given: A permutation of at most 12 symbols defining an ordered alphabet 𝒜 and a positive integer n (n≤4).
+
+Return: All strings of length at most n formed from 𝒜, ordered lexicographically. (Note: As in “Enumerating k-mers Lexicographically”, alphabet order is based on the order in which the symbols are given.)
+
+#########################Maximum Matchings and RNA Secondary Structures#################
+#########################http://rosalind.info/problems/mmch/############################
+
+Breaking the Bonds
+
+In “Perfect Matchings and RNA Secondary Structures”, we considered a problem that required us to assume that every possible nucleotide is involved in base pairing to induce an RNA secondary structure. Yet the only way this could occur is if the frequency of adenine in our RNA strand is equal to the frequency of uracil and if the same holds for guanine and cytosine.
+
+We will therefore begin to explore ways of counting secondary structures in which this condition is not required. A more general combinatorial problem will ask instead for the total number of secondary structures of a strand having a maximum possible number of base pairs.
+
+Problem
+
+The graph theoretical analogue of the quandary stated in the introduction above is that if we have an RNA string s that does not have the same number of occurrences of 'C' as 'G' and the same number of occurrences of 'A' as 'U', then the bonding graph of s cannot possibly possess a perfect matching among its basepair edges. For example, see Figure 1; in fact, most bonding graphs will not contain a perfect matching.
+
+In light of this fact, we define a maximum matching in a graph as a matching containing as many edges as possible. See Figure 2 for three maximum matchings in graphs.
+
+A maximum matching of basepair edges will correspond to a way of forming as many base pairs as possible in an RNA string, as shown in Figure 3.
+
+Given: An RNA string s of length at most 100.
+
+Return: The total possible number of maximum matchings of basepair edges in the bonding graph of s.
+
+#######################Creating a Distance Matrix#######################################
+#######################http://rosalind.info/problems/pdst/##############################
+
+Introduction to Distance-Based Phylogeny
+
+A number of different approaches are used to build phylogenies, each one featuring its own computational strengths and weaknesses. One of these measures is distance-based phylogeny, which constructs a tree from evolutionary distances calculated between pairs of taxa.
+
+A wide assortment of different measures exist for quantifying this evolutionary distance. Once we have selected a distance function and used it to calculate the distance between every pair of taxa, we place these pairwise distance functions into a table.
+
+In this problem, we will consider an evolutionary function based on Hamming distance. Recall from “Counting Point Mutations” that this function compares two homologous strands of DNA by counting the minimum possible number of point mutations that could have occurred on the evolutionary path between the two strands.
+
+Problem
+
+For two strings s1 and s2 of equal length, the p-distance between them, denoted dp(s1,s2), is the proportion of corresponding symbols that differ between s1 and s2.
+
+For a general distance function d on n taxa s1,s2,…,sn (taxa are often represented by genetic strings), we may encode the distances between pairs of taxa via a distance matrix D in which Di,j=d(si,sj).
+
+Given: A collection of n (n≤10) DNA strings s1,…,sn of equal length (at most 1 kbp). Strings are given in FASTA format.
+
+Return: The matrix D corresponding to the p-distance dp on the given strings. As always, note that your answer is allowed an absolute error of 0.001.
+
+
+#######################Reversal Distance################################################
+#######################http://rosalind.info/problems/rear/##############################
+
+Rearrangements Power Large-Scale Genomic Changes
+
+Perhaps the most common type of genome rearrangement is an inversion, which flips an entire interval of DNA found on the same chromosome. As in the case of calculating Hamming distance (see “Counting Point Mutations”), we would like to determine the minimum number of inversions that have occurred on the evolutionary path between two chromosomes. To do so, we will use the model introduced in “Enumerating Gene Orders” in which a chromosome is represented by a permutation of its synteny blocks.
+
+Problem
+
+A reversal of a permutation creates a new permutation by inverting some interval of the permutation; (5,2,3,1,4), (5,3,4,1,2), and (4,1,2,3,5) are all reversals of (5,3,2,1,4). The reversal distance between two permutations π and σ, written drev(π,σ), is the minimum number of reversals required to transform π into σ (this assumes that π and σ have the same length).
+
+Given: A collection of at most 5 pairs of permutations, all of which have length 10.
+
+Return: The reversal distance between each permutation pair.
+
+#######################Matching Random Motifs###########################################
+#######################http://rosalind.info/problems/rstr/##############################
+
+More Random Strings
+
+In “Introduction to Random Strings”, we discussed searching for motifs in large genomes, in which random occurrences of the motif are possible. Our aim is to quantify just how frequently random motifs occur.
+
+One class of motifs of interest are promoters, or regions of DNA that initiate the transcription of a gene. A promoter is usually located shortly before the start of its gene, and it contains specific intervals of DNA that provide an initial binding site for RNA polymerase to initiate transcription. Finding a promoter is usually the second step in gene prediction after establishing the presence of an ORF (see “Open Reading Frames”).
+
+Unfortunately, there is no quick rule for identifying promoters. In Escherichia coli, the promoter contains two short intervals (TATAAT and TTGACA), which are respectively located 10 and 35 base pairs upstream from the beginning of the gene's ORF. Yet even these two short intervals are consensus strings (see “Consensus and Profile”): they represent average-case strings that are not found intact in most promoters. Bacterial promoters further vary in that some contain additional intervals used to bind to specific proteins or to change the intensity of transcription.
+
+Eukaryotic promoters are even more difficult to characterize. Most have a TATA box (consensus sequence: TATAAA), preceded by an interval called a B recognition element, or BRE. These elements are typically located within 40 bp of the start of transcription. For that matter, eukaryotic promoters can hold a larger number of additional "regulatory" intervals, which can be found as far as several thousand base pairs upstream of the gene.
+
+
+Problem
+
+Our aim in this problem is to determine the probability with which a given motif (a known promoter, say) occurs in a randomly constructed genome. Unfortunately, finding this probability is tricky; instead of forming a long genome, we will form a large collection of smaller random strings having the same length as the motif; these smaller strings represent the genome's substrings, which we can then test against our motif.
+
+Given a probabilistic event A, the complement of A is the collection Ac of outcomes not belonging to A. Because Ac takes place precisely when A does not, we may also call Ac "not A."
+
+For a simple example, if A is the event that a rolled die is 2 or 4, then Pr(A)=13. Ac is the event that the die is 1, 3, 5, or 6, and Pr(Ac)=23. In general, for any event we will have the identity that Pr(A)+Pr(Ac)=1.
+
+Given: A positive integer N≤100000, a number x between 0 and 1, and a DNA string s of length at most 10 bp.
+
+Return: The probability that if N random DNA strings having the same length as s are constructed with GC-content x (see “Introduction to Random Strings”), then at least one of the strings equals s. We allow for the same random string to be created more than once.
+
+
+#########################Counting Subsets###############################################
+#########################http://rosalind.info/problems/sset/############################
+
+Characters and SNPs
+
+A character is any feature (genetic, physical, etc.) that divides a collection of organisms into two separate groups. One commonly used genetic character is the possession of a single-nucleotide polymorphism, or SNP.
+
+In a process called genotyping, the SNP markers taken from a large number of human donors have been used very successfully to catalogue the migration and differentiation of human populations over the last 200,000 years. For $199, you can participate in National Geographic's Genographic Project, and discover your own genetic heritage.
+
+Whether we use genetic or physical characters, we may think of a collection of n characters as a collection of "ON"/"OFF" switches. An organism is said to possess a character in the "ON" position (although often the assignment of "ON"/"OFF" is arbitrary). Given a collection of taxa, we may represent a character by the collection of taxa possessing the character.
+
+
+Problem
+
+A set is the mathematical term for a loose collection of objects, called elements. Examples of sets include {the moon, the sun, Wilford Brimley} and ℝ, the set containing all real numbers. We even have the empty set, represented by ∅ or {}, which contains no elements at all. Two sets are equal when they contain the same elements. In other words, in contrast to permutations, the ordering of the elements of a set is unimportant (e.g., {the moon, the sun, Wilford Brimley} is equivalent to {Wilford Brimley, the moon, the sun}). Sets are not allowed to contain duplicate elements, so that {Wilford Brimley, the sun, the sun} is not a set. We have already used sets of 2 elements to represent edges from a graph.
+
+A set A is a subset of B if every element of A is also an element of B, and we write A⊆B. For example, {the sun, the moon}⊆{the sun, the moon, Wilford Brimley}, and ∅ is a subset of every set (including itself!).
+
+As illustrated in the biological introduction, we can use subsets to represent the collection of taxa possessing a character. However, the number of applications is endless; for example, an event in probability can now be defined as a subset of the set containing all possible outcomes.
+
+Our first question is to count the total number of possible subsets of a given set.
+
+Given: A positive integer n (n≤1000).
+
+Return: The total number of subsets of {1,2,…,n} modulo 1,000,000.
+
+
+########################Introduction to Alternative Splicing############################
+########################http://rosalind.info/problems/aspc/#############################
+
+The Baby and the Bathwater
+
+However, the chaining of exons does not always proceed in the same manner; alternative splicing describes the fact that all the exons from a gene are not necessarily joined together in order to produce an mRNA. The most common form of alternative splicing is exon skipping, in which certain exons are omitted along with introns.
+
+Alternative splicing serves a vital evolutionary purpose, as it greatly increases the number of different proteins that can be translated from a given gene; different proteins produced from the same gene as a result of alternative splicing are called protein isoforms; see Figure 1 In fact, about 95% of human genes are commonly spliced in more than one way. At the same time, when alternative splicing goes wrong, it can create the same negative effects caused by mutations, and it has been blamed for a number of genetic disorders.
+
+In this problem, we will consider a simplified model of alternative splicing in which any of a collection of exons can be chained together to create a final molecule of mRNA, under the condition that we use a minimum number of exons (m) whose order is fixed. Because the exons are not allowed to move around, we need only select a subset of at least m of our exons to chain into an mRNA.
+
+The implied computational question is to count the total number of such subsets, which will provide us with the total possible number of alternatively spliced isoforms for this model.
+
+Problem
+
+In “Counting Subsets”, we saw that the total number of subsets of a set S containing n elements is equal to 2n.
+
+However, if we intend to count the total number of subsets of S having a fixed size k, then we use the combination statistic C(n,k), also written (nk).
+
+Given: Positive integers n and m with 0≤m≤n≤2000.
+
+Return: The sum of combinations C(n,k) for all k satisfying m≤k≤n, modulo 1,000,000. In shorthand, ∑nk=m(nk).
+
+#########################Edit Distance##################################################
+#########################http://rosalind.info/problems/edit/############################
+
+Point Mutations Include Insertions and Deletions
+
+In “Counting Point Mutations”, we saw that Hamming distance gave us a preliminary notion of the evolutionary distance between two DNA strings by counting the minimum number of single nucleotide substitutions that could have occurred on the evolutionary path between the two strands.
+
+However, in practice, homologous strands of DNA or protein are rarely the same length because point mutations also include the insertion or deletion of a single nucleotide (and single amino acids can be inserted or deleted from peptides). Thus, we need to incorporate these insertions and deletions into the calculation of the minimum number of point mutations between two strings. One of the simplest models charges a unit "cost" to any single-symbol insertion/deletion, then (in keeping with parsimony) requests the minimum cost over all transformations of one genetic string into another by point substitutions, insertions, and deletions.
+
+
+Problem
+
+Given two strings s and t (of possibly different lengths), the edit distance dE(s,t) is the minimum number of edit operations needed to transform s into t, where an edit operation is defined as the substitution, insertion, or deletion of a single symbol.
+
+The latter two operations incorporate the case in which a contiguous interval is inserted into or deleted from a string; such an interval is called a gap. For the purposes of this problem, the insertion or deletion of a gap of length k still counts as k distinct edit operations.
+
+Given: Two protein strings s and t in FASTA format (each of length at most 1000 aa).
+
+Return: The edit distance dE(s,t).
+
+#######################Expected Number of Restriction Sites#############################
+#######################http://rosalind.info/problems/eval/##############################
+
+A Shot in the Dark
+
+In “Locating Restriction Sites”, we first familiarized ourselves with restriction enzymes. Recall that these enzymes are used by bacteria to cut through both strands of viral DNA, thus disarming the virus: the viral DNA locations where these cuts are made are known as restriction sites. Recall also that every restriction enzyme is preprogrammed with a reverse palindromic interval of DNA to which it will bind and cut, called a recognition sequence. These even length intervals are usually either 4 or 6 base pairs long, although longer ones do exist; rare-cutter enzymes have recognition sequences of 8 or more base pairs.
+
+In this problem, we will ask a simple question: how does the bacterium "know" that it will probably succeed in finding a restriction site within the virus's DNA? The answer is that the short length of recognition sequences guarantees a large number of matches occurring randomly.
+
+Intuitively, we would expect for a recognition sequence of length 6 to occur on average once every 46=4,096 base pairs. Note that this fact does not imply that the associated restriction enzyme will cut the viral DNA every 4,096 bp; it may find two restriction sites close together, then not find a restriction site for many thousand nucleotides.
+
+In this problem, we will generalize the problem of finding an average number of restriction sites to take into account the GC-content of the underlying string being analyzed.
+
+
+Problem
+
+Say that you place a number of bets on your favorite sports teams. If their chances of winning are 0.3, 0.8, and 0.6, then you should expect on average to win 0.3 + 0.8 + 0.6 = 1.7 of your bets (of course, you can never win exactly 1.7!)
+
+More generally, if we have a collection of events A1,A2,…,An, then the expected number of events occurring is Pr(A1)+Pr(A2)+⋯+Pr(An) (consult the note following the problem for a precise explanation of this fact). In this problem, we extend the idea of finding an expected number of events to finding the expected number of times that a given string occurs as a substring of a random string.
+
+Given: A positive integer n (n≤1,000,000), a DNA string s of even length at most 10, and an array A of length at most 20, containing numbers between 0 and 1.
+
+Return: An array B having the same length as A in which B[i] represents the expected number of times that s will appear as a substring of a random DNA string t of length n, where t is formed with GC-content A[i] (see “Introduction to Random Strings”).
+
+
+#######################Motzkin Numbers and RNA Secondary Structures######################
+#######################http://rosalind.info/problems/motz/###############################
+
+The Dirty Truth About Mathematics Parties
+
+In “Catalan Numbers and RNA Secondary Structures”, we talked about counting the number of ways for an even number of people to shake hands at a party without crossing hands. However, in the real world, parties only contain an even number of people about 30% of the time, and mathematicians aren't social butterflies. So we should instead count the total number of ways for some of the people at the party to shake hands without crossing.
+
+In the biological world, people are perhaps more social, but not every nucleotide in a strand of RNA winds up base pairing with another nucleotide during RNA folding. As a result, we want to loosen this assumption and count the total number of different secondary structures of an RNA strand whose base pairs don't overlap (i.e., we still forbid pseudoknots in the strand).
+
+Problem
+
+Similarly to our definition of the Catalan numbers, the n-th Motzkin number mn counts the number of ways to form a (not necessarily perfect) noncrossing matching in the complete graph Kn containing n nodes. For example, Figure 1 demonstrates that m5=21. Note in this figure that technically, the "trivial" matching that contains no edges at all is considered to be a matching, because it satisfies the defining condition that no two edges are incident to the same node.
+
+How should we compute the Motzkin numbers? As with Catalan numbers, we will take m0=m1=1. To calculate mn in general, assume that the nodes of Kn are labeled around the outside of a circle with the integers between 1 and n, and consider node 1, which may or may not be involved in a matching. If node 1 is not involved in a matching, then there are mn−1 ways of matching the remaining n−1 nodes. If node 1 is involved in a matching, then say it is matched to node k: this leaves k−2 nodes on one side of edge {1,k} and n−k nodes on the other side; as with the Catalan numbers, no edge can connect the two sides, which gives us mk−2⋅mn−k ways of matching the remaining edges. Allowing k to vary between 2 and n yields the following recurrence relation for the Motzkin numbers: mn=mn−1+∑nk=2mk−2⋅mn−k.
+
+To count all possible secondary structures of a given RNA string that do not contain pseudoknots, we need to modify the Motzkin recurrence so that it counts only matchings of basepair edges in the bonding graph corresponding to the RNA string; see Figure 2.
+
+Given: An RNA string s of length at most 300 bp.
+
+Return: The total number of noncrossing matchings of basepair edges in the bonding graph of s, modulo 1,000,000.
+
+
+#####################
+#####################
