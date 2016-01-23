@@ -732,5 +732,29 @@ Return: A shortest common supersequence of s and t. If multiple solutions exist,
 
 
 
+#####################Introduction to Set Operations#####################
+#####################http://rosalind.info/problems/seto/#####################
+
+Forming New Sets
+
+Just as numbers can be added, subtracted, and multiplied, we can manipulate sets in certain basic ways. The natural operations on sets are to combine their elements, to find those elements common to both sets, and to determine which elements belong to one set but not another.
+
+Just as graph theory is the mathematical study of graphs and their properties, set theory is the mathematical study of sets and their properties.
+
+
+
+Problem
+
+If A and B are sets, then their union A∪B is the set comprising any elements in either A or B; their intersection A∩B is the set of elements in both A and B; and their set difference A−B is the set of elements in A but not in B.
+
+Furthermore, if A is a subset of another set U, then the set complement of A with respect to U is defined as the set Ac=U−A. See the Sample sections below for examples.
+
+Given: A positive integer n (n≤20,000) and two subsets A and B of {1,2,…,n}.
+
+Return: Six sets: A∪B, A∩B, A−B, B−A, Ac, and Bc (where set complements are taken with respect to {1,2,…,n}).
+
+
+
+
 #####################
 #####################
