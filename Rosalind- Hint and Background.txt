@@ -756,5 +756,49 @@ Return: Six sets: A∪B, A∩B, A−B, B−A, Ac, and Bc (where set complements 
 
 
 
+#####################Sorting by Reversals##########################################
+#####################http://rosalind.info/problems/sort/#####################
+
+Reconstructing Evolutionary Histories
+
+When we calculate the Hamming distance between two genetic strings, we can easily infer a collection of point mutations that occurred on the evolutionary path between the two strings by simply examining the mismatched symbols. However, when calculating the reversal distance (see “Reversal Distance”), we only have the minimum number of reversals separating two permutations.
+
+The computational problem of sorting by reversals demands instead that we provide a minimum list of reversals transforming one permutation into another. As a result, sorting by reversals subsumes the calculation of reversal distance: once we have a minimum collection of reversals, the reversal distance follows immediately.
+
+
+Problem
+
+A reversal of a permutation can be encoded by the two indices at the endpoints of the interval that it inverts; for example, the reversal that transforms (4,1,2,6,3,5) into (4,1,3,6,2,5) is encoded by [3,5].
+
+A collection of reversals sorts π into γ if the collection contains drev(π,γ) reversals, which when successively applied to π yield γ.
+
+Given: Two permutations π and γ, each of length 10.
+
+Return: The reversal distance drev(π,γ), followed by a collection of reversals sorting π into γ. If multiple collections of such reversals exist, you may return any one.
+
+
+#####################Inferring Protein from Spectrum#####################
+#####################http://rosalind.info/problems/spec/#####################
+
+
+Introduction to Mass Spectrometry
+
+In “Calculating Protein Mass”, we briefly mentioned an analytic chemical method called mass spectrometry, which aims to measure the mass-to-charge ratio of a particle or a molecule. In a mass spectrometer, a sample is vaporized (turned into gas), and then particles from the sample are ionized. The resulting ions are placed into an electromagnetic field, which separates them based on their charge and mass. The output of the mass spectrometer is a mass spectrum, or a plot of ions' possible mass-to-charge ratio values with the intensity (actual observed frequency) of ions having these mass-to-charge values.
+
+For the moment, we will ignore charge and consider a list of the ions' monoisotopic masses as a simplified spectrum. Researchers do not possess cheap technology to go in and examine a protein one amino acid at a time (molecules are too submicroscopic). Instead, to determine a protein's structure, we will split several copies of the protein into smaller pieces, then weigh the resulting fragments. To do this, we assume that each cut (breakage point) occurs between two amino acids and that we can measure the mass of the resulting pieces for all possible cuts.
+
+For example, the (unknown) protein "PRTEIN" can be cut in five possible ways: "P" and "RTEIN"; "PR" and "TEIN"; "PRT" and "EIN"; "PRTE" and "IN"; "PRTEI" and "N". We then can measure the masses of all fragments, including the entire string. The "left" end of a protein is called its N-terminus, and the ions corresponding to the protein string's prefixes (P, PR, PRT, PRTE, PRTEI) are called b-ions. The "right" end of the protein is called its C-terminus, and the ions corresponding to the string's suffixes (N, IN, EIN, TEIN, RTEIN) are called y-ions. The difference in the masses of two adjacent b-ions (or y-ions) gives the mass of one amino acid residue; for example, the difference between the masses of "PRT" and "PR" must be the mass of "T." By extension, knowing the masses of every b-ion of a protein allows us to deduce the protein's identity.
+
+
+Problem
+
+The prefix spectrum of a weighted string is the collection of all its prefix weights.
+
+Given: A list L of n (n≤100) positive real numbers.
+
+Return: A protein string of length n−1 whose prefix spectrum is equal to L (if multiple solutions exist, you may output any one of them). Consult the monoisotopic mass table.
+
+
+
 #####################
 #####################
