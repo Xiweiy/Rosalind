@@ -367,7 +367,7 @@ for i in gccontentlines:
         gccontentlist[len(gccontentlist)-1]=gccontentlist[len(gccontentlist)-1]+i.rstrip("\n")
 #print gccontentlist
 
-gccontentdict={}d
+gccontentdict={}
 for i in gccontentlist:
     gccontentdict[i[1:14]]= (i.count("G")+i.count("C"))/float(len(i)-14)
 #print gccontentdict

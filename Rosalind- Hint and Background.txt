@@ -930,5 +930,26 @@ Given: Two protein strings ss and tt in FASTA format (with each string having le
 
 Return: The edit distance dE(s,t)dE(s,t) followed by two augmented strings s′s′ and t′t′ representing an optimal alignment of ss and tt.
 
+
+
+#####################Inferring Peptide from Full Spectrum#####################
+#####################http://rosalind.info/problems/full/#####################
+
+
+Ions Galore
+
+In “Inferring Protein from Spectrum”, we inferred a protein string from a list of b-ions. In practice, biologists have no way of distinguishing between b-ions and y-ions in the simplified spectrum of a peptide. However, we will often possess a pair of masses in the spectrum corresponding to a single cut. The two corresponding ions complement each other: for example, mass("PR") + mass("TEIN") = mass("PRTEIN"). As a result, we can easily infer the mass of a b-ion from its complementary y-ion and vice versa, as long as we already know the parent mass, i.e., the mass of the entire peptide.
+
+The theoretical simplified spectrum for a protein PP of length nn is constructed as follows: form all possible cuts, then compute the mass of the b-ion and the y-ion at each cut. Duplicate masses are allowed. You might guess how we could modify “Inferring Protein from Spectrum” to infer a peptide from its theoretical simplified spectrum; here we consider a slightly modified form of this problem in which we attempt to identify the interior region of a peptide given only b-ions and y-ions that are cut within this region. As a result, we will have constant masses at the beginning and end of the peptide that will be present in the mass of every b-ion and y-ion, respectively.
+
+Problem
+
+Say that we have a string ss containing tt as an internal substring, so that there exist nonempty substrings s1s1 and s2s2 of ss such that ss can be written as s1ts2s1ts2. A t-prefix contains all of s1s1 and none of s2s2; likewise, a t-suffix contains all of s2s2 and none of s1s1.
+
+Given: A list LL containing 2n+32n+3 positive real numbers (n≤100n≤100). The first number in LL is the parent mass of a peptide PP, and all other numbers represent the masses of some b-ions and y-ions of PP (in no particular order). You may assume that if the mass of a b-ion is present, then so is that of its complementary y-ion, and vice-versa.
+
+Return: A protein string tt of length nn for which there exist two positive real numbers w1w1 and w2w2 such that for every prefix pp and suffix ss of tt, each of w(p)+w1w(p)+w1 and w(s)+w2w(s)+w2 is equal to an element of LL. (In other words, there exists a protein string whose tt-prefix and tt-suffix weights correspond to the non-parent mass values of LL.) If multiple solutions exist, you may output any one.
+
+
 #####################
 #####################
