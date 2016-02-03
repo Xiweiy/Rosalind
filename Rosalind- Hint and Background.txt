@@ -1007,6 +1007,42 @@ Given: A text DNA string ss of length at most 10 kbp, followed by a collection o
 
 Return: An n×nn×n matrix MM for which Mj,k=1Mj,k=1 if the jjth and kkth pattern strings can be interwoven into ss and Mj,k=0Mj,k=0 otherwise.
 
+#####################Finding the Longest Multiple Repeat#####################
+#####################http://rosalind.info/problems/lrep/#####################
+
+
+Long Repeats
+
+We saw in “Introduction to Pattern Matching” that a data structure commonly used to encode the relationships among a collection of strings was the trie, which is particularly useful when the strings represent a collection of patterns that we wish to match to a larger text.
+
+The trie is helpful when processing multiple strings at once, but when we want to analyze a single string, we need something different.
+
+In this problem, we will use a new data structure to handle the problem of finding long repeats in the genome. Recall from “Finding a Motif in DNA” that cataloguing these repeats is a problem of the utmost interest to molecular biologists, as a natural correlation exists between the frequency of a repeat and its influence on RNA transcription. Our aim is therefore to identify long repeats that occur more than some predetermined number of times.
+
+
+Problem
+
+A repeated substring of a string ss of length nn is simply a substring that appears in more than one location of ss; more specifically, a k-fold substring appears in at least k distinct locations.
+
+The suffix tree of ss, denoted T(s)T(s), is defined as follows:
+
+T(s) is a rooted tree having exactly nn leaves.
+Every edge of T(s)T(s) is labeled with a substring of s∗s∗, where s∗s∗ is the string formed by adding a placeholder symbol $ to the end of ss.
+Every internal node of T(s)T(s) other than the root has at least two children; i.e., it has degree at least 3.
+The substring labels for the edges leading from a node to its children must begin with different symbols.
+By concatenating the substrings along edges, each path from the root to a leaf corresponds to a unique suffix of s∗s∗.
+See Figure 1 for an example of a suffix tree.
+
+Given: A DNA string ss (of length at most 20 kbp) with $ appended, a positive integer kk, and a list of edges defining the suffix tree of ss. Each edge is represented by four components:
+
+1. the label of its parent node in T(s)T(s);
+2. the label of its child node in T(s)T(s);
+3. the location of the substring tt of s∗s∗ assigned to the edge; and
+4. the length of tt.
+Return: The longest substring of ss that occurs at least kk times in ss. (If multiple solutions exist, you may return any single solution.)
+
+
+
 #####################
 #####################
 
