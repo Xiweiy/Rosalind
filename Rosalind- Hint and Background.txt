@@ -951,5 +951,67 @@ Given: A list LL containing 2n+32n+3 positive real numbers (n≤100n≤100). The
 Return: A protein string tt of length nn for which there exist two positive real numbers w1w1 and w2w2 such that for every prefix pp and suffix ss of tt, each of w(p)+w1w(p)+w1 and w(s)+w2w(s)+w2 is equal to an element of LL. (In other words, there exists a protein string whose tt-prefix and tt-suffix weights correspond to the non-parent mass values of LL.) If multiple solutions exist, you may output any one.
 
 
+#####################Independent Segregation of Chromosomes#####################
+#####################http://rosalind.info/problems/indc/#####################
+
+Mendel's Work Examined
+
+Mendel's laws of heredity were initially ignored, as only 11 papers have been found that cite his paper between its publication in 1865 and 1900. One reason for Mendel's lack of popularity is that information did not move quite so readily as in the modern age; perhaps another reason is that as a friar in an Austrian abbey, Mendel was already isolated from Europe's university community.
+
+It is fair to say that no one who did initially read Mendel's work fully believed that traits for more complex organisms, like humans, could be broken down into discrete units of heredity (i.e., Mendel's factors). This skepticism was well-founded in empirical studies of inheritance, which indicated a far more complex picture of heredity than Mendel's theory dictated. The friar himself admitted that representing every trait with a single factor was overly simplistic, and so he proposed that some traits are polymorphic, or encoded by multiple different factors.
+
+Yet any hereditary model would ultimately be lacking without an understanding of how traits are physically passed from organisms to their offspring. This physical mechanism was facilitated by Walther Flemming's 1879 discovery of chromosomes in salamander eggs during cell division, followed by Theodor Boveri's observation that sea urchin embryos with chromatin removed failed to develop correctly (implying that traits must somehow be encoded on chromosomes). By the turn of the 20th century, Mendel's work had been rediscovered by Hugo de Vries and Carl Correns, but it was still unclear how Mendel's hereditary model could be tied to chromosomes.
+
+Fortunately, Walter Sutton demonstrated that grasshopper chromosomes occur in matched pairs called homologous chromosomes, or homologs. We now know that the DNA found on homologous chromosomes is identical except for minor variations attributable to SNPs and small rearrangements, which are typically insertions and deletions. Sutton himself, working five decades before Watson & Crick and possessing no real understanding of DNA, actually surmised that variations to homologous chromosomes should somehow correspond to Mendel's alleles.
+
+Yet it still remained to show how chromosomes themselves are inherited. Most multicellular organisms are diploid, meaning that their cells possess two sets of chromosomes; humans are included among diploid organisms, having 23 homologous chromosome pairs.
+
+Gametes (i.e., sex cells) in diploid organisms form an exception and are haploid, meaning that they only possess one chromosome from each pair of homologs. During the fusion of two gametes of opposite sex, a diploid embryo is formed by simply uniting the two gametes' halved chromosome sets.
+
+Mendel's first law can now be explained by the fact that during the meiosis each gamete randomly selects one of the two available alleles of the particular gene.
+
+Mendel's second law follows from the fact that gametes select nonhomologous chromosomes independently of each other; however, this law will hold only for factors encoded on nonhomologous chromosomes, which leaves open the inheritance of factors encoded on homologous chromosomes.
+
+
+Problem
+
+Consider a collection of coin flips. One of the most natural questions we can ask is if we flip a coin 92 times, what is the probability of obtaining 51 "heads", vs. 27 "heads", vs. 92 "heads"?
+
+Each coin flip can be modeled by a uniform random variable in which each of the two outcomes ("heads" and "tails") has probability equal to 1/2. We may assume that these random variables are independent (see “Independent Alleles”); in layman's terms, the outcomes of the two coin flips do not influence each other.
+
+A binomial random variable XX takes a value of kk if nn consecutive "coin flips" result in kk total "heads" and n−kn−k total "tails." We write that X∈Bin(n,1/2)X∈Bin(n,1/2).
+
+Given: A positive integer n≤50n≤50.
+
+Return: An array AA of length 2n2n in which A[k]A[k] represents the common logarithm of the probability that two diploid siblings share at least kk of their 2n2n chromosomes (we do not consider recombination for now).
+
+
+
+#####################Finding Disjoint Motifs in a Gene#####################
+#####################http://rosalind.info/problems/itwv/#####################
+
+Disjoint Motifs
+
+In this problem, we will consider an algorithmic (but not particularly practical) variant of motif finding for multiple motifs. Say we have two motifs corresponding to the coding regions of genes, and we want to know whether these motifs can be found in genes occupying the same region of the genome. To prevent exons from coinciding, we further stipulate that the two motifs are nonoverlapping.
+
+In this problem, we will ask whether two disjoint motifs can be located in a given string. We considered a similar problem in “Interleaving Two Motifs”, which asked us to find a shortest possible string containing two motifs; however, in that problem, the motifs were allowed to coincide.
+
+
+Problem
+
+Given three strings ss, tt, and uu, we say that tt and uu can be interwoven into ss if there is some substring of ss made up of tt and uu as disjoint subsequences.
+
+For example, the strings "ACAGACAG" and "CCGCCG" can be interwoven into "GACCACGGTTGACCACGGTT". However, they cannot be interwoven into "GACCACAAAAGGTTGACCACAAAAGGTT" because of the appearance of the four 'A's in the middle of the subsequences. Similarly, even though both "ACACGACACG" is a shortest common supersequence of ACAGACAG and CCGCCG, it is not possible to interweave these two strings into "ACACGACACG" because the two desired subsequences must be disjoint; see “Interleaving Two Motifs” for details on finding a shortest common supersequence of two strings.
+
+Given: A text DNA string ss of length at most 10 kbp, followed by a collection of nn (n≤10n≤10) DNA strings of length at most 10 bp acting as patterns.
+
+Return: An n×nn×n matrix MM for which Mj,k=1Mj,k=1 if the jjth and kkth pattern strings can be interwoven into ss and Mj,k=0Mj,k=0 otherwise.
+
+#####################
+#####################
+
+
+
+
 #####################
 #####################
