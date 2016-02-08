@@ -44,7 +44,7 @@ mismatch = 0
 while i and j:
       #print traceback[i,j]
       nexti,nextj = traceback[i,j]
-      if list(traceback[i,j]) == [i-1,j-1] or list(traceback[nexti,nextj]) == [i-1,j-1]:
+      if list(traceback[i,j]) == [i-1,j-1]:
             alignment1 = seq1[j-1] + alignment1
             alignment2 = seq2[i-1] + alignment2
       elif list(traceback[i,j]) == [i-1, j]:
