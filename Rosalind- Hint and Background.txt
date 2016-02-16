@@ -1043,11 +1043,260 @@ Return: The longest substring of ss that occurs at least kk times in ss. (If mul
 
 
 
-#####################
-#####################
+#####################Newick Format with Edge Weights#####################
+#####################http://rosalind.info/problems/nkew/#####################
+
+Weighting the Tree
+
+A vital goal of creating phylogenies is to quantify a molecular clock that indicates the amount of evolutionary time separating two members of the phylogeny. To this end, we will assign numbers to the edges of a tree so that the number assigned to an edge represents the amount of time separating the two species at each end of the edge. More generally, the evolutionary time between any two species will be given by simply adding the individual times connecting the nodes.
+
+
+Problem
+
+In a weighted tree, each edge is assigned a (usually positive) number, called its weight. The distance between two nodes in a weighted tree becomes the sum of the weights along the unique path connecting the nodes.
+
+To generalize Newick format to the case of a weighted tree TT, during our repeated "key step," if leaves v1,v2,…,vnv1,v2,…,vn are neighbors in TT, and all these leaves are incident to uu, then we replace uu with (v1:d1,v2:d2,…,vn:dn)u(v1:d1,v2:d2,…,vn:dn)u, where didi is now the weight on the edge {vi,u}{vi,u}.
+
+Given: A collection of n weighted trees (n≤40n≤40) in Newick format, with each tree containing at most 200 nodes; each tree TkTk is followed by a pair of nodes xk and yk in Tk.
+
+Return: A collection of n numbers, for which the kth number represents the distance between xk and yk in Tk.
+
+
+#####################Wobble Bonding and RNA Secondary Structures#####################
+#####################http://rosalind.info/problems/rnas/#####################
+
+Don't Look Down
+
+We have discussed the problem of counting RNA secondary structures in previous problems. In this problem, we will add some assumptions to those used in “Motzkin Numbers and RNA Secondary Structures” to provide ourselves with an ultimately robust way of counting feasible RNA secondary structures.
+
+First, in addition to the classic Watson and Crick base pairing of adenine with uracil and cytosine with guanine, uracil sometimes bonds with guanine, forming what is called a wobble base pair. As a result, we would like to allow wobble base pairing.
+
+Second, although RNA folds over itself during base pairing, the structure of the molecule is rigid enough to prevent bases located very close to each other on the strand from bonding to each other.
+
+
+Problem
+
+Given an RNA string ss, we will augment the bonding graph of ss by adding basepair edges connecting all occurrences of 'U' to all occurrences of 'G' in order to represent possible wobble base pairs.
+
+We say that a matching in the bonding graph for ss is valid if it is noncrossing (to prevent pseudoknots) and has the property that a basepair edge in the matching cannot connect symbols sjsj and sksk unless k≥j+4k≥j+4 (to prevent nearby nucleotides from base pairing).
+
+See Figure 1 for an example of a valid matching if we allow wobble base pairs. In this problem, we will wish to count all possible valid matchings in a given bonding graph; see Figure 2 for all possible valid matchings in a small bonding graph, assuming that we allow wobble base pairing.
+
+Given: An RNA string ss (of length at most 200 bp).
+
+Return: The total number of distinct valid matchings of basepair edges in the bonding graph of ss. Assume that wobble base pairing is allowed.
+
+
+#####################Counting Disease Carriers#####################
+#####################http://rosalind.info/problems/afrq/#####################
+
+Genetic Drift and the Hardy-Weinberg Principle
+
+Mendel's laws of segration and independent assortment are excellent for the study of individual organisms and their progeny, but they say nothing about how alleles move through a population over time. Our first question is: when can we assume that the ratio of an allele in a population, called the allele frequency, is stable?
+
+G. H. Hardy and Wilhelm Weinberg independently considered this question at the turn of the 20th Century, shortly after Mendel's ideas had been rediscovered. They concluded that the percentage of an allele in a population of individuals is in genetic equilibrium when five conditions are satisfied:
+
+1. The population is so large that random changes in the allele frequency are negligible.
+2. No new mutations are affecting the gene of interest;
+3. The gene does not influence survival or reproduction, so that natural selection is not occurring;
+4. Gene flow, or the change in allele frequency due to migration into and out of the population, is negligible.
+5. Mating occurs randomly with respect to the gene of interest.
+The Hardy-Weinberg principle states that if a population is in genetic equilibrium for a given allele, then its frequency will remain constant and evenly distributed through the population. Unless the gene in question is important to survival or reproduction, Hardy-Weinberg usually offers a reasonable enough model of population genetics.
+
+One of the many benefits of the Mendelian theory of inheritance and simplifying models like Hardy-Weinberg is that they help us predict the probability with which genetic diseases will be inherited, so as to take appropriate preventative measures. Genetic diseases are usually caused by mutations to chromosomes, which are passed on to subsequent generations.
+
+The simplest and most widespread case of a genetic disease is a single gene disorder, which is caused by a single mutated gene. Over 4,000 such human diseases have been identified, including cystic fibrosis and sickle-cell anemia. In both of these cases, the individual must possess two recessive alleles for a gene in order to contract the disease. Thus, carriers can live their entire lives without knowing that they can pass the disease on to their children.
+
+The above introduction to genetic equilibrium leaves us with a basic and yet very practical question regarding gene disorders: if we know the number of people who have a disease encoded by a recessive allele, can we predict the number of carriers in the population?
+
+
+Problem
+
+To model the Hardy-Weinberg principle, assume that we have a population of NN diploid individuals. If an allele is in genetic equilibrium, then because mating is random, we may view the 2N2N chromosomes as receiving their alleles uniformly. In other words, if there are mm dominant alleles, then the probability of a selected chromosome exhibiting the dominant allele is simply p=m2Np=m2N.
+
+Because the first assumption of genetic equilibrium states that the population is so large as to be ignored, we will assume that NN is infinite, so that we only need to concern ourselves with the value of pp.
+
+Given: An array AA for which A[k] represents the proportion of homozygous recessive individuals for the k-th Mendelian factor in a diploid population. Assume that the population is in genetic equilibrium for all factors.
+
+Return: An array BB having the same length as A in which B[k] represents the probability that a randomly selected individual carries at least one copy of the recessive allele for the k-th factor.
+
+#####################Creating a Character Table from Genetic Strings#################
+#####################http://rosalind.info/problems/cstr/#####################
+
+
+Phylogeny from Genetic Characters
+
+In “Creating a Character Table”, we introduced the character table as a way of representing a number of characters simultaneously. In that problem, we found a character table representing an unrooted binary tree on a collection of taxa.
+
+Of course, in practice, the problem operates in reverse. We first need to generate a character table before we can model a phylogeny on this table. In modern genetics, a reliable way to obtain a large number of characters is by using SNPs. As mentioned in “Counting Subsets”, for a given SNP, we can divide taxa into two sets depending on which of two bases is present at the nucleotide, thus defining the split of a character.
+
+
+Problem
+
+A collection of strings is characterizable if there are at most two possible choices for the symbol at each position of the strings.
+
+Given: A collection of at most 100 characterizable DNA strings, each of length at most 300 bp.
+
+Return: A character table for which each nontrivial character encodes the symbol choice at a single position of the strings. (Note: the choice of assigning '1' and '0' to the two states of each SNP in the strings is arbitrary.)
+
+
+#####################Counting Optimal Alignments#####################
+#####################http://rosalind.info/problems/ctea/#####################
+
+Beware of Alignment Inference
+
+In “Edit Distance Alignment”, we introduced the concept of an alignment of two genetic strings having differing lengths with respect to edit distance. This provided us with a way of visualizing a specific collection of symbol substitutions, insertions, and deletions that could have taken place on the evolutionary path between the two strings.
+
+However, simply finding one optimal alignment and declaring that it represents a true evolutionary history is a dangerous idea because the actual evolutionary picture may be suboptimal. For that matter, the collection of all optimal alignments may be huge, and the characteristics of these alignments could differ widely.
+
+In order to begin analyzing the collection of optimal alignments for a pair of strings, the first question we will ask is simple: just how many optimal alignments exist?
+
+
+Problem
+
+Recall from “Edit Distance Alignment” that if s′s′ and t′t′ are the augmented strings corresponding to an alignment of strings ss and tt, then the edit alignment score of s′s′ and t′t′ was given by the Hamming distance dH(s′,t′)dH(s′,t′) (because s′s′ and t′t′ have the same length and already include gap symbols to denote insertions/deletions).
+
+As a result, we obtain dE(s,t)=mins′,t′dH(s′,t′)dE(s,t)=mins′,t′dH(s′,t′), where the minimum is taken over all alignments of ss and tt. Strings s′s′ and t′t′ achieving this minimum correspond to an optimal alignment with respect to edit alignment score.
+
+Given: Two protein strings ss and tt in FASTA format, each of length at most 1000 aa.
+
+Return: The total number of optimal alignments of ss and tt with respect to edit alignment score, modulo 134,217,727 (2^27-1).
 
 
 
+#####################Counting Unrooted Binary Trees#####################
+#####################http://rosalind.info/problems/cunr/#####################
+
+
+Counting Trees
+
+A natural question is to be able to count the total number of distinct unrooted binary trees having nn leaves, where each leaf is labeled by some taxon. Before we can count all these trees, however, we need to have a notion of when two such trees are the same.
+
+Our tool will be the split. Recall from “Creating a Character Table” that removing any edge from a tree TT separates its leaves into sets SS and ScSc, so that each edge of TT can be labeled by this split S∣ScS∣Sc. As a result, an unrooted binary tree can be represented uniquely by its collection of splits.
+
+
+Problem
+
+Two unrooted binary trees T1T1 and T2T2 having the same nn labeled leaves are considered to be equivalent if there is some assignment of labels to the internal nodes of T1T1 and T2T2 so that the adjacency lists of the two trees coincide. As a result, note that T1T1 and T2T2 must have the same splits; conversely, if the two trees do not have the same splits, then they are considered distinct.
+
+Let b(n)b(n) denote the total number of distinct unrooted binary trees having nn labeled leaves.
+
+Given: A positive integer nn (n≤1000n≤1000).
+
+Return: The value of b(n)b(n) modulo 1,000,000.
+
+
+#####################Global Alignment with Scoring Matrix#####################
+#####################http://rosalind.info/problems/glob/#####################
+
+Generalizing the Alignment Score
+
+The edit alignment score in “Edit Distance Alignment” counted the total number of edit operations implied by an alignment; we could equivalently think of this scoring function as assigning a cost of 1 to each such operation. Another common scoring function awards matched symbols with 1 and penalizes substituted/inserted/deleted symbols equally by assigning each one a score of 0, so that the maximum score of an alignment becomes the length of a longest common subsequence of ss and tt (see “Finding a Shared Spliced Motif”). In general, the alignment score is simply a scoring function that assigns costs to edit operations encoded by the alignment.
+
+One natural way of adding complexity to alignment scoring functions is by changing the alignment score based on which symbols are substituted; many methods have been proposed for doing this. Another way to do so is to vary the penalty assigned to the insertion or deletion of symbols.
+
+In general, alignment scores can be either maximized or minimized depending on how scores are established. The general problem of optimizing a particular alignment score is called global alignment.
+
+
+Problem
+
+To penalize symbol substitutions differently depending on which two symbols are involved in the substitution, we obtain a scoring matrix SS in which Si,jSi,j represents the (negative) score assigned to a substitution of the iith symbol of our alphabet 𝒜A with the jjth symbol of 𝒜A.
+
+A gap penalty is the component deducted from alignment score due to the presence of a gap. A gap penalty may be a function of the length of the gap; for example, a linear gap penalty is a constant gg such that each inserted or deleted symbol is charged gg; as a result, the cost of a gap of length LL is equal to gLgL.
+
+Given: Two protein strings ss and tt in FASTA format (each of length at most 1000 aa).
+
+Return: The maximum alignment score between ss and tt. Use:
+
+The BLOSUM62 scoring matrix.
+Linear gap penalty equal to 5 (i.e., a cost of -5 is assessed for each gap symbol).
+
+
+#####################Genome Assembly with Perfect Coverage#####################
+#####################http://rosalind.info/problems/pcov/#####################
+
+
+Cyclic Chromosomes
+
+Recall that although chromosomes taken from eukaryotes have a linear structure, many bacterial chromosomes are actually circular. We represented a linear chromosome with a DNA string, so we only need to modify the definition of string to model circular chromosomes.
+
+Perfect coverage is the phenomenon in fragment assembly of having a read (or kk-mer) begin at every possible location in the genome. Unfortunately, perfect coverage is still difficult to achieve, but fragment assembly technology continues to improve by leaps and bounds, and perfect coverage is perhaps not the fantasy it once was.
+
+
+Problem
+
+A circular string is a string that does not have an initial or terminal element; instead, the string is viewed as a necklace of symbols. We can represent a circular string as a string enclosed in parentheses. For example, consider the circular DNA string (ACGTAC), and note that because the string "wraps around" at the end, this circular string can equally be represented by (CGTACA), (GTACAC), (TACACG), (ACACGT), and (CACGTA). The definitions of substrings and superstrings are easy to generalize to the case of circular strings (keeping in mind that substrings are allowed to wrap around).
+
+Given: A collection of (error-free) DNA kk-mers (k≤50k≤50) taken from the same strand of a circular chromosome. In this dataset, all kk-mers from this strand of the chromosome are present, and their de Bruijn graph consists of exactly one simple cycle.
+
+Return: A cyclic superstring of minimal length containing the reads (thus corresponding to a candidate cyclic chromosome).
+
+
+#####################Matching a Spectrum to a Protein#####################
+#####################http://rosalind.info/problems/prsm/#####################
+
+
+Searching the Protein Database
+
+Many proteins have already been identified for a wide variety of organisms. Accordingly, there are a large number of protein databases available, and so the first step after creating a mass spectrum for an unidentified protein is to search through these databases for a known protein with a highly similar spectrum. In this manner, many similar proteins found in different species have been identified, which aids researchers in determining protein function.
+
+In “Comparing Spectra with the Spectral Convolution”, we introduced the spectral convolution and used it to measure the similarity of simplified spectra. In this problem, we would like to extend this idea to find the most similar protein in a database to a spectrum taken from an unknown protein. Our plan is to use the spectral convolution to find the largest possible number of masses that each database protein shares with our candidate protein after shifting, and then select the database protein having the largest such number of shared masses.
+
+
+Problem
+
+The complete spectrum of a weighted string ss is the multiset S[s] containing the weights of every prefix and suffix of ss.
+
+Given: A positive integer n followed by a collection of n protein strings s1, s2, ..., sn and a multiset R of positive numbers (corresponding to the complete spectrum of some unknown protein string).
+
+Return: The maximum multiplicity of R⊖S[sk] taken over all strings sk, followed by the string sk for which this maximum multiplicity occurs (you may output any such value if multiple solutions exist).
+
+
+
+#####################Quartets##########################################
+#####################http://rosalind.info/problems/qrt/#####################
+
+Incomplete Characters
+
+The modern revolution in genome sequencing has produced a huge amount of genetic data for a wide variety of species. One ultimate goal of possessing all this information is to be able to construct complete phylogenies via direct genome analysis.
+
+For example, say that we have a gene shared by a number of taxa. We could create a character based on whether species are known to possess the gene or not, and then use a huge character table to construct our desired phylogeny. However, the present bottleneck with such a method is that it assumes that we already possess complete genome information for all possible species. The race is on to sequence as many species genomes as possible; for instance, the Genome 10K Project aims to sequence 10,000 species genomes over the next decade. Yet for the time being, possessing a complete genomic picture of all Earth's species remains a dream.
+
+As a result of these practical limitations, we need to be able to work with partial characters, which divide taxa into three separate groups: those possessing the character, those not possessing the character, and those for which we do not yet have conclusive information.
+
+
+Problem
+
+A partial split of a set SS of n taxa models a partial character and is denoted by A∣BA∣B, where AA and BB are still the two disjoint subsets of taxa divided by the character. Unlike in the case of splits, we do not necessarily require that A∪B=SA∪B=S; (A∪B)c(A∪B)c corresponds to those taxa for which we lack conclusive evidence regarding the character.
+
+We can assemble a collection of partial characters into a generalized partial character table C in which the symbol xx is placed in Ci,j if we do not have conclusive evidence regarding the jth taxon with respect to the ith partial character.
+
+A quartet is a partial split A∣BA∣B in which both AA and BB contain precisely two elements. For the sake of simplicity, we often will consider quartets instead of partial characters. We say that a quartet A∣BA∣B is inferred from a partial split C∣DC∣D if A⊆CA⊆C and B⊆DB⊆D (or equivalently A⊆DA⊆D and B⊆CB⊆C). For example, {1,3}∣{2,4} and {3,5}∣{2,4} can be inferred from {1,3,5}∣{2,4}.
+
+Given: A partial character table C.
+
+Return: The collection of all quartets that can be inferred from the splits corresponding to the underlying characters of C.
+
+
+#####################Using the Spectrum Graph to Infer Peptides#####################
+#####################http://rosalind.info/problems/sgra/#####################
+
+Getting Real with Spectra
+
+In “Inferring Peptide from Full Spectrum”, we considered an idealized version of the simplified spectrum in which every cut through a given peptide was produced, so that the spectrum possessed all possible b-ions and y-ions cutting the peptide. In reality, not every cut will be produced in a spectrum, which may also contain errors. As a result, it is difficult or impossible to recover an entire peptide from a single spectrum.
+
+In the more practical case of a mass spectrum, where intensity is plotted against ions' mass-charge ratios, inferring the protein is also greatly complicated by the presence of erratic peaks in the spectrum.
+
+
+Problem
+
+For a weighted alphabet 𝒜A and a collection L of positive real numbers, the spectrum graph of L is a digraph constructed in the following way. First, create a node for every real number in LL. Then, connect a pair of nodes with a directed edge (u,v) if v>u and v−u is equal to the weight of a single symbol in 𝒜A. We may then label the edge with this symbol.
+
+In this problem, we say that a weighted string s=s1s2⋯sn matches L if there is some increasing sequence of positive real numbers (w1,w2,…,wn+1)(w1,w2,…,wn+1) in LL such that w(s1)=w2−w1, w(s2)=w3−w2, ..., and w(sn)=wn+1−wn.
+
+Given: A list L (of length at most 100) containing positive real numbers.
+
+Return: The longest protein string that matches the spectrum graph of L (if multiple solutions exist, you may output any one of them). Consult the monoisotopic mass table.
 
 #####################
 #####################
